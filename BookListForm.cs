@@ -35,6 +35,8 @@ namespace BookManage
         string ChangeCopyName;          // 수정된 셀의 출판사
         int ChangeQuantity;             // 수정된 셀의 개수
 
+        public static int btnClick;
+
         #endregion
 
         public BookListForm()
@@ -51,12 +53,14 @@ namespace BookManage
                 btnDel.Visible = true;
                 btnInput.Visible = true;
                 btnSave.Visible = true;
+                btnRent.Visible = false;
             }
             else
             {
                 btnDel.Visible = false;
                 btnInput.Visible = false;
                 btnSave.Visible = false;
+                btnRent.Visible = true;
             }
         }
 
@@ -78,11 +82,11 @@ namespace BookManage
             changeBookNumber = dgvBookList.Rows[rowIndex].Cells[0].Value.ToString();
             changeBookName = dgvBookList.Rows[rowIndex].Cells[1].Value.ToString();
             changeWriteName = dgvBookList.Rows[rowIndex].Cells[2].Value.ToString();
-            ChangeCopyName = dgvBookList.Rows[rowIndex].Cells[2].Value.ToString();
-            ChangeQuantity = Int32.Parse(dgvBookList.Rows[rowIndex].Cells[5].Value.ToString());
+            ChangeCopyName = dgvBookList.Rows[rowIndex].Cells[3].Value.ToString();
+            ChangeQuantity = Int32.Parse(dgvBookList.Rows[rowIndex].Cells[4].Value.ToString());
 
             // 업데이트 구문 입력
-            changeStr = "BookNumber='" + changeBookNumber + ", BookName='" + changeBookName + "', WriteName='" + changeWriteName + "', "
+            changeStr = "BookNumber='" + changeBookNumber + "', BookName='" + changeBookName + "', WriteName='" + changeWriteName + "', "
                 + "CopyName='" + ChangeCopyName + "', Quantity=" + ChangeQuantity;
         }
 
@@ -112,6 +116,12 @@ namespace BookManage
             {
                 sql = "select * from BookList where CopyName like '%" + tbSearch.Text + "%'";
             }
+
+/*            selectedBookNumber = dgvBookList.Rows[0].Cells[0].Value.ToString();
+            selectedBookName = dgvBookList.Rows[0].Cells[1].Value.ToString();
+            selectedWriteName = dgvBookList.Rows[0].Cells[2].Value.ToString();
+            selectedCopyName = dgvBookList.Rows[0].Cells[3].Value.ToString();
+            selectedQuantity = Int32.Parse(dgvBookList.Rows[0].Cells[4].Value.ToString());*/
 
             // 데이터베이스 연결
             dbc.Connection();
@@ -149,33 +159,45 @@ namespace BookManage
 
         private void btnRent_Click(object sender, EventArgs e)
         {
-            if (LoginForm.root == 1)
-            {
-                RentForm rf = new RentForm();
-                rf.ShowDialog();
+            if (selectedQuantity >0)
+                {
+                    sql = "insert into RentBook values (\'" + DateTime.Now.ToString("yyyyMMddHHmmss") + "\', '"
+                    + LoginForm.memId + "\', '" + selectedBookNumber + "\', '" + DateTime.Now.ToString("yyyy-MM-dd") + "\','"
+                    + DateTime.Now.AddDays(10).ToString("yyyy-MM-dd") + "\','')";
+                    dbc.Connection();
+                    dbc.Command(sql);
+
+                    MessageBox.Show(selectedBookName + " 도서를 대출합니다.");
+
+                    sql = "update BookList set quantity = " + (selectedQuantity - 1) + " from BookList " + whereStr;
+                    dbc.Connection();
+                    dbc.Command(sql);
+
+                    sql = "select * from BookList";
+                    dbc.Connection();
+                    dbc.Adaptor(sql);
             }
             else
             {
-                sql = "update BookList set quantity = " + (selectedQuantity - 1) + " from BookList " + whereStr;
-                dbc.Connection();
-                dbc.Command(sql);
-
-                MessageBox.Show(selectedBookName + " 도서를 대출합니다.");
-
-                sql = "select * from BookList";
-                dbc.Connection();
-                dbc.Adaptor(sql);
+                MessageBox.Show("대출이 불가능합니다.");
             }
         }
 
-        private void btnReturn_Click(object sender, EventArgs e)
+        private void btnReturnList_Click(object sender, EventArgs e)
         {
-            this.Visible = false;
+            btnClick = 1;
             RentForm rf = new RentForm();
             rf.ShowDialog();
 
             this.Visible = true;
             Search();
+        }
+
+        private void btnRentList_Click(object sender, EventArgs e)
+        {
+            btnClick = 0;
+            RentForm rf = new RentForm();
+            rf.ShowDialog();
         }
     }
 }

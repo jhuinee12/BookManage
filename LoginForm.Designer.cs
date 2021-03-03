@@ -38,6 +38,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.btnChangePw = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -73,6 +74,7 @@
             // 
             this.tbPw.Location = new System.Drawing.Point(151, 63);
             this.tbPw.Name = "tbPw";
+            this.tbPw.PasswordChar = '*';
             this.tbPw.Size = new System.Drawing.Size(256, 25);
             this.tbPw.TabIndex = 4;
             this.tbPw.UseWaitCursor = true;
@@ -119,6 +121,7 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.btnChangePw);
             this.panel2.Controls.Add(this.btnLogin);
             this.panel2.Controls.Add(this.btnJoin);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -138,7 +141,19 @@
             this.panel3.Size = new System.Drawing.Size(535, 111);
             this.panel3.TabIndex = 9;
             // 
-            // Form1
+            // btnChangePw
+            // 
+            this.btnChangePw.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnChangePw.Font = new System.Drawing.Font("굴림", 7F);
+            this.btnChangePw.Location = new System.Drawing.Point(91, 85);
+            this.btnChangePw.Name = "btnChangePw";
+            this.btnChangePw.Size = new System.Drawing.Size(316, 21);
+            this.btnChangePw.TabIndex = 7;
+            this.btnChangePw.Text = "패스워드변경";
+            this.btnChangePw.UseVisualStyleBackColor = false;
+            this.btnChangePw.Click += new System.EventHandler(this.btnChangePw_Click);
+            // 
+            // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -146,7 +161,7 @@
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.Name = "Form1";
+            this.Name = "LoginForm";
             this.Text = "Form1";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -169,6 +184,7 @@
         private System.Windows.Forms.Panel panel3;
         public System.Windows.Forms.TextBox tbId;
         public System.Windows.Forms.TextBox tbPw;
+        private System.Windows.Forms.Button btnChangePw;
     }
 }
 

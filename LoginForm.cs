@@ -75,5 +75,14 @@ namespace BookManage
 
             this.Visible = true;
         }
+
+        private void btnChangePw_Click(object sender, EventArgs e)
+        {
+            ChangePW cpw = new ChangePW();
+            this.Visible = false;
+            cpw.ShowDialog();
+
+            this.Visible = true;
+        }
     }
 }

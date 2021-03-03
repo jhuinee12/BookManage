@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.btnReturn = new System.Windows.Forms.Button();
             this.dgvBookList = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -38,7 +39,6 @@
             this.rbBookCopy = new System.Windows.Forms.RadioButton();
             this.rbBookWr = new System.Windows.Forms.RadioButton();
             this.rbBookName = new System.Windows.Forms.RadioButton();
-            this.label1 = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBookList)).BeginInit();
             this.panel1.SuspendLayout();
@@ -55,6 +55,15 @@
             this.panel2.Size = new System.Drawing.Size(776, 328);
             this.panel2.TabIndex = 5;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 292);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(145, 15);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "대여 가능 권수 : 3권";
+            // 
             // btnReturn
             // 
             this.btnReturn.Location = new System.Drawing.Point(698, 279);
@@ -63,6 +72,7 @@
             this.btnReturn.TabIndex = 7;
             this.btnReturn.Text = "도서반납";
             this.btnReturn.UseVisualStyleBackColor = true;
+            this.btnReturn.Click += new System.EventHandler(this.btnReturn_Click);
             // 
             // dgvBookList
             // 
@@ -146,15 +156,6 @@
             this.rbBookName.TabStop = true;
             this.rbBookName.Text = "도서검색";
             this.rbBookName.UseVisualStyleBackColor = true;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 292);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(145, 15);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "대여 가능 권수 : 3권";
             // 
             // RentForm
             // 

@@ -12,7 +12,7 @@ namespace BookManage
     class DBConnection
     {
         public SqlConnection con;
-        public DataSet ds;
+        public static DataSet ds;
         public SqlCommand cmd;
         //public bool login = false; // 로그인 상태 false
         public string strName = "";
@@ -56,30 +56,6 @@ namespace BookManage
             cmd.Dispose();
         }
 
-/*        public string countColumn()
-        {
-            Connection();
-            try
-            {
-                if (cmd != null)
-                {
-                    cmd.Connection = con;
-                    cmd.CommandText = "SELECT COUNT(*) FROM bookList";
-                    object scalarValue = cmd.ExecuteScalar();
-                    return string.Format("{0:D4}", (int)scalarValue+1);
-                }
-                else
-                {
-                    return "0001";
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-                return "0";
-            }
-        }*/
-
         public void Adaptor(string str)
         {
             ds = new DataSet();
@@ -95,19 +71,20 @@ namespace BookManage
                 MessageBox.Show(ex.ToString());
             }
         }
-        public void Adaptor2(string str)
+        public DataSet Adaptor2(string str)
         {
             ds = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter(str, con);
 
             try
             {
-                adapter.Fill(ds, "RentBook");
-                RentForm.rf.dgvBookList.DataSource = ds.Tables[0];
+                adapter.Fill(ds);
+                return ds;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
+                return ds;
             }
         }
 
@@ -135,6 +112,25 @@ namespace BookManage
             {
                 MessageBox.Show(ex.ToString());
             }
+        }
+
+        public string DataLoad(string tableName, string where, string column)
+        {
+            string pdata = "";
+            string Query = "select * from " + tableName + " " + where;
+            Connection();
+            Command(Query);
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                pdata = (rdr[column] + "");
+            }
+
+            rdr.Close();
+            cmd.Dispose();
+
+            return pdata;
         }
     }
 }

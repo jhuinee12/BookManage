@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnReturnList = new System.Windows.Forms.Button();
             this.btnRent = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnDel = new System.Windows.Forms.Button();
@@ -41,7 +42,7 @@
             this.rbBookCopy = new System.Windows.Forms.RadioButton();
             this.rbBookWr = new System.Windows.Forms.RadioButton();
             this.rbBookName = new System.Windows.Forms.RadioButton();
-            this.btnReturn = new System.Windows.Forms.Button();
+            this.btnRentList = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBookList)).BeginInit();
             this.panel1.SuspendLayout();
@@ -50,7 +51,8 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.btnReturn);
+            this.panel2.Controls.Add(this.btnRentList);
+            this.panel2.Controls.Add(this.btnReturnList);
             this.panel2.Controls.Add(this.btnRent);
             this.panel2.Controls.Add(this.btnSave);
             this.panel2.Controls.Add(this.btnDel);
@@ -61,13 +63,23 @@
             this.panel2.Size = new System.Drawing.Size(776, 328);
             this.panel2.TabIndex = 3;
             // 
+            // btnReturnList
+            // 
+            this.btnReturnList.Location = new System.Drawing.Point(698, 279);
+            this.btnReturnList.Name = "btnReturnList";
+            this.btnReturnList.Size = new System.Drawing.Size(75, 40);
+            this.btnReturnList.TabIndex = 7;
+            this.btnReturnList.Text = "반납목록";
+            this.btnReturnList.UseVisualStyleBackColor = true;
+            this.btnReturnList.Click += new System.EventHandler(this.btnReturnList_Click);
+            // 
             // btnRent
             // 
-            this.btnRent.Location = new System.Drawing.Point(609, 279);
+            this.btnRent.Location = new System.Drawing.Point(536, 279);
             this.btnRent.Name = "btnRent";
             this.btnRent.Size = new System.Drawing.Size(75, 40);
             this.btnRent.TabIndex = 6;
-            this.btnRent.Text = "도서대출";
+            this.btnRent.Text = "도서대여";
             this.btnRent.UseVisualStyleBackColor = true;
             this.btnRent.Click += new System.EventHandler(this.btnRent_Click);
             // 
@@ -185,14 +197,15 @@
             this.rbBookName.Text = "도서검색";
             this.rbBookName.UseVisualStyleBackColor = true;
             // 
-            // btnReturn
+            // btnRentList
             // 
-            this.btnReturn.Location = new System.Drawing.Point(698, 279);
-            this.btnReturn.Name = "btnReturn";
-            this.btnReturn.Size = new System.Drawing.Size(75, 40);
-            this.btnReturn.TabIndex = 7;
-            this.btnReturn.Text = "도서반납";
-            this.btnReturn.UseVisualStyleBackColor = true;
+            this.btnRentList.Location = new System.Drawing.Point(617, 279);
+            this.btnRentList.Name = "btnRentList";
+            this.btnRentList.Size = new System.Drawing.Size(75, 40);
+            this.btnRentList.TabIndex = 8;
+            this.btnRentList.Text = "대여목록";
+            this.btnRentList.UseVisualStyleBackColor = true;
+            this.btnRentList.Click += new System.EventHandler(this.btnRentList_Click);
             // 
             // BookListForm
             // 
@@ -228,6 +241,7 @@
         private System.Windows.Forms.Button btnSave;
         public System.Windows.Forms.DataGridView dgvBookList;
         private System.Windows.Forms.Button btnRent;
-        private System.Windows.Forms.Button btnReturn;
+        private System.Windows.Forms.Button btnReturnList;
+        private System.Windows.Forms.Button btnRentList;
     }
 }

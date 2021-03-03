@@ -52,6 +52,12 @@
     <Compile Include="BookListForm.Designer.cs">
       <DependentUpon>BookListForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ChangePW.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChangePW.Designer.cs">
+      <DependentUpon>ChangePW.cs</DependentUpon>
+    </Compile>
     <Compile Include="DBConnection.cs" />
     <Compile Include="InputBookForm.cs">
       <SubType>Form</SubType>
@@ -81,6 +87,9 @@
     </Compile>
     <EmbeddedResource Include="BookListForm.resx">
       <DependentUpon>BookListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChangePW.resx">
+      <DependentUpon>ChangePW.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InputBookForm.resx">
       <DependentUpon>InputBookForm.cs</DependentUpon>
