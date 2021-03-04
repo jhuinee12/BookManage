@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace BookManage
 {
-    public partial class RentForm : Form
+    public partial class RootRentForm : Form
     {
-        public static RentForm rf;
+        public static RootRentForm rrf;
         DBConnection dbc = new DBConnection();
         // 선택된 데이터
         string selectedRentNumber;
@@ -21,22 +21,20 @@ namespace BookManage
         string selectedCopyName;
         string selectedRentDate;
         string selectedReturnExpectedDate;
-        string selectedBookNumber;
 
-        public RentForm(string selectedBookNumber)
+        public RootRentForm()
         {
             InitializeComponent();
             dgvLoad();
 
             dgvBookList.CellMouseClick += dgvBookList_CellMouseClick;       // 셀 선택
-            this.selectedBookNumber = selectedBookNumber;
         }
 
         private void dgvLoad()
         {
             string sql = "";
-            string where0 = "where MemId like '" + LoginForm.memId + "' and returnDate = ''";
-            string where1 = "where MemId like '" + LoginForm.memId + "' and not returnDate = ''";
+            string where0 = "where returnDate = ''";
+            string where1 = "where not returnDate = ''";
             //sql = "select * from RentBook";
             if (BookListForm.btnClick == 0)
             {
@@ -71,7 +69,7 @@ namespace BookManage
                 selectedWriteName = dgvBookList.Rows[0].Cells[2].Value.ToString();
                 selectedCopyName = dgvBookList.Rows[0].Cells[3].Value.ToString();
                 selectedRentDate = dgvBookList.Rows[0].Cells[4].Value.ToString();
-
+                selectedReturnExpectedDate = dgvBookList.Rows[0].Cells[5].Value.ToString();
             }
         }
 
@@ -84,24 +82,6 @@ namespace BookManage
             selectedCopyName = dgvBookList.Rows[rowIndex].Cells[3].Value.ToString();
             selectedRentDate = dgvBookList.Rows[rowIndex].Cells[4].Value.ToString();
             selectedReturnExpectedDate = dgvBookList.Rows[rowIndex].Cells[5].Value.ToString();
-        }
-
-        private void btnReturn_Click(object sender, EventArgs e)
-        {
-            string sql = "update rentbook set returndate = '" + DateTime.Now.ToString("yyyy-MM-dd") 
-                + "' from rentbook where RentNumber = '" + selectedRentNumber + "'";
-
-            dbc.Connection();
-            dbc.Command(sql);
-
-            int quantity = int.Parse(dbc.DataLoad("bookList", "where bookNumber = '" + selectedBookNumber + "'", "quantity")) +1;
-
-            sql = "update BookList set quantity = " + quantity + " from BookList where bookNumber = '" + selectedBookNumber + "'";
-            dbc.Connection();
-            dbc.Command(sql);
-
-            MessageBox.Show(selectedBookNumber + "도서를 반납합니다.");
-            dgvLoad();
         }
     }
 }

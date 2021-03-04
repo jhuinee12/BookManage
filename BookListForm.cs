@@ -117,15 +117,18 @@ namespace BookManage
                 sql = "select * from BookList where CopyName like '%" + tbSearch.Text + "%'";
             }
 
-/*            selectedBookNumber = dgvBookList.Rows[0].Cells[0].Value.ToString();
-            selectedBookName = dgvBookList.Rows[0].Cells[1].Value.ToString();
-            selectedWriteName = dgvBookList.Rows[0].Cells[2].Value.ToString();
-            selectedCopyName = dgvBookList.Rows[0].Cells[3].Value.ToString();
-            selectedQuantity = Int32.Parse(dgvBookList.Rows[0].Cells[4].Value.ToString());*/
-
             // 데이터베이스 연결
             dbc.Connection();
             dbc.Adaptor(sql);
+
+            if (int.Parse(dbc.count("bookList", "")) != 0)
+            {
+                selectedBookNumber = dgvBookList.Rows[0].Cells[0].Value.ToString();
+                selectedBookName = dgvBookList.Rows[0].Cells[1].Value.ToString();
+                selectedWriteName = dgvBookList.Rows[0].Cells[2].Value.ToString();
+                selectedCopyName = dgvBookList.Rows[0].Cells[3].Value.ToString();
+                selectedQuantity = Int32.Parse(dgvBookList.Rows[0].Cells[4].Value.ToString());
+            }
         }
 
         private void btnInput_Click(object sender, EventArgs e)
@@ -160,14 +163,17 @@ namespace BookManage
         private void btnRent_Click(object sender, EventArgs e)
         {
             if (selectedQuantity >0)
+            {
+                if (int.Parse(dbc.count("rentBook", "where bookNumber = '" + selectedBookNumber + "' and returnDate = ''"))==0)
                 {
+
                     sql = "insert into RentBook values (\'" + DateTime.Now.ToString("yyyyMMddHHmmss") + "\', '"
-                    + LoginForm.memId + "\', '" + selectedBookNumber + "\', '" + DateTime.Now.ToString("yyyy-MM-dd") + "\','"
-                    + DateTime.Now.AddDays(10).ToString("yyyy-MM-dd") + "\','')";
+                        + LoginForm.memId + "\', '" + selectedBookNumber + "\', '" + DateTime.Now.ToString("yyyy-MM-dd") + "\','"
+                        + DateTime.Now.AddDays(10).ToString("yyyy-MM-dd") + "\','')";
                     dbc.Connection();
                     dbc.Command(sql);
 
-                    MessageBox.Show(selectedBookName + " 도서를 대출합니다.");
+                    MessageBox.Show(selectedBookName + " 도서를 대여합니다.");
 
                     sql = "update BookList set quantity = " + (selectedQuantity - 1) + " from BookList " + whereStr;
                     dbc.Connection();
@@ -176,18 +182,32 @@ namespace BookManage
                     sql = "select * from BookList";
                     dbc.Connection();
                     dbc.Adaptor(sql);
+                }
+                else
+                {
+                    MessageBox.Show("이미 대여한 도서입니다.");
+                }
             }
             else
             {
-                MessageBox.Show("대출이 불가능합니다.");
+                MessageBox.Show("대여가 불가능합니다.");
             }
         }
 
         private void btnReturnList_Click(object sender, EventArgs e)
         {
             btnClick = 1;
-            RentForm rf = new RentForm();
-            rf.ShowDialog();
+
+            if (LoginForm.root == 1)
+            {
+                RootRentForm rrf = new RootRentForm();
+                rrf.ShowDialog();
+            }
+            else
+            {
+                RentForm rf = new RentForm(selectedBookNumber);
+                rf.ShowDialog();
+            }
 
             this.Visible = true;
             Search();
@@ -196,8 +216,19 @@ namespace BookManage
         private void btnRentList_Click(object sender, EventArgs e)
         {
             btnClick = 0;
-            RentForm rf = new RentForm();
-            rf.ShowDialog();
+
+            if (LoginForm.root == 1)
+            {
+                RootRentForm rrf = new RootRentForm();
+                rrf.ShowDialog();
+            }
+            else
+            {
+                RentForm rf = new RentForm(selectedBookNumber);
+                rf.ShowDialog();
+            }
+
+            Search();
         }
     }
 }

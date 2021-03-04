@@ -85,6 +85,12 @@
     <Compile Include="RentForm.Designer.cs">
       <DependentUpon>RentForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="RootRentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RootRentForm.Designer.cs">
+      <DependentUpon>RootRentForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="BookListForm.resx">
       <DependentUpon>BookListForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -111,6 +117,9 @@
     </Compile>
     <EmbeddedResource Include="RentForm.resx">
       <DependentUpon>RentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RootRentForm.resx">
+      <DependentUpon>RootRentForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

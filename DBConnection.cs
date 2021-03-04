@@ -117,7 +117,7 @@ namespace BookManage
         public string DataLoad(string tableName, string where, string column)
         {
             string pdata = "";
-            string Query = "select * from " + tableName + " " + where;
+            string Query = "select " + column + " from " + tableName + " " + where;
             Connection();
             Command(Query);
             SqlDataReader rdr = cmd.ExecuteReader();
@@ -125,6 +125,24 @@ namespace BookManage
             while (rdr.Read())
             {
                 pdata = (rdr[column] + "");
+            }
+
+            rdr.Close();
+            cmd.Dispose();
+
+            return pdata;
+        }
+        public string count(string tableName, string where)
+        {
+            string pdata = "";
+            string Query = "select count(*) as count from " + tableName + " " + where;
+            Connection();
+            Command(Query);
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                pdata = (rdr["count"] + "");
             }
 
             rdr.Close();
